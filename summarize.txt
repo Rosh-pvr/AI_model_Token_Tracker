@@ -1,0 +1,271 @@
+===============================
+TOKEN TRACKING TOOL - MULTI-PROVIDER EDITION
+===============================
+
+PROJECT OVERVIEW
+-----------------
+Universal token tracking tool for LLM applications supporting 4 major providers:
+1. Hugging Face (local, free)
+2. Google Gemini (cloud, high quality)
+3. OpenAI GPT (ChatGPT, GPT-4)
+4. Anthropic Claude (Claude 3.5, long context)
+
+KEY FEATURES
+------------
+✓ Multi-provider support with easy switching
+✓ Token usage tracking (input/output/total)
+✓ Latency measurement per provider
+✓ Cost estimation and comparison
+✓ LangSmith integration for all providers
+✓ Web dashboard with provider selector
+✓ Secure .env configuration
+✓ Provider-specific model configs
+
+SUPPORTED PROVIDERS & MODELS
+-----------------------------
+
+1. HUGGING FACE
+   - Model: google/flan-t5-base
+   - Type: Local (CPU-based)
+   - API Key: Not required
+   - Best for: Testing, development, offline use
+   - Cost: Free
+
+2. GOOGLE GEMINI
+   - Model: models/gemini-2.5-pro
+   - Type: Cloud API
+   - API Key: GOOGLE_API_KEY
+   - Best for: High quality, multimodal
+   - Cost: Free tier + pay-per-token
+
+3. OPENAI
+   - Model: gpt-4o-mini (can use gpt-4, gpt-3.5-turbo)
+   - Type: Cloud API
+   - API Key: OPENAI_API_KEY
+   - Best for: Production, GPT-4 access
+   - Cost: Pay-per-token
+
+4. ANTHROPIC
+   - Model: claude-3-5-sonnet-20241022
+   - Type: Cloud API
+   - API Key: ANTHROPIC_API_KEY
+   - Best for: Long context, nuanced responses
+   - Cost: Pay-per-token
+
+CONFIGURATION
+-------------
+
+Environment Variables (.env):
+- LANGCHAIN_API_KEY: Required for tracing
+- GOOGLE_API_KEY: For Gemini (optional)
+- OPENAI_API_KEY: For ChatGPT/GPT-4 (optional)
+- ANTHROPIC_API_KEY: For Claude (optional)
+- LLM_PROVIDER: Choose default provider
+
+Provider Selection:
+- CLI: Set LLM_PROVIDER in .env
+- Dashboard: Select from dropdown per query
+
+WORKFLOW
+--------
+
+1. INITIALIZATION
+   ├── Load API keys from .env
+   ├── Read LLM_PROVIDER setting
+   ├── Initialize TokenTracker
+   └── Setup model for chosen provider
+
+2. QUERY EXECUTION
+   ├── Receive user query
+   ├── Select provider (env or UI)
+   ├── Load/cache provider model
+   ├── Start latency timer
+   ├── Execute query through provider API
+   ├── Calculate tokens (input + output)
+   ├── Record latency
+   └── Log with provider tag
+
+3. TRACKING & LOGGING
+   ├── Save to local JSON with provider info
+   ├── Send trace to LangSmith cloud
+   ├── Update statistics per provider
+   └── Display results
+
+4. ANALYTICS
+   ├── Calculate per-provider statistics
+   ├── Compare providers (cost, latency, quality)
+   ├── Generate usage reports
+   └── Visualize trends in LangSmith
+
+USAGE
+-----
+
+CLI Version:
+python token_tracker.py
+(Uses LLM_PROVIDER from .env)
+
+Web Dashboard:
+python dashboard_app.py
+(Choose provider per query in UI)
+
+SWITCHING PROVIDERS
+-------------------
+
+Method 1 - Edit .env:
+LLM_PROVIDER=openai      # Use OpenAI
+LLM_PROVIDER=gemini      # Use Gemini
+LLM_PROVIDER=anthropic   # Use Claude
+LLM_PROVIDER=huggingface # Use HuggingFace
+
+Method 2 - Web Dashboard:
+Select from dropdown for each query
+
+OUTPUTS
+-------
+
+Local Files:
+- token_usage.json: CLI logs with provider tags
+- dashboard_logs.json: Dashboard interaction logs
+
+LangSmith Dashboard:
+- Per-provider traces
+- Token usage graphs
+- Latency comparison
+- Cost analysis across providers
+
+Terminal:
+- Query results
+- Per-provider statistics
+- Overall statistics
+
+PROVIDER COMPARISON
+-------------------
+
+Speed:
+Fastest → Slowest
+1. OpenAI GPT-4o-mini
+2. Google Gemini
+3. Anthropic Claude
+4. Hugging Face (local)
+
+Cost:
+Cheapest → Most Expensive
+1. Hugging Face (free)
+2. OpenAI GPT-4o-mini
+3. Google Gemini
+4. Claude 3.5 Sonnet
+5. OpenAI GPT-4
+
+Quality:
+(Subjective, task-dependent)
+- GPT-4: General excellence
+- Claude: Long context, nuanced
+- Gemini: Multimodal, fast
+- HuggingFace: Basic tasks
+
+FILES STRUCTURE
+---------------
+token_tracker.py      # CLI with 4 providers
+dashboard_app.py      # Web dashboard with selector
+requirements.txt      # All provider packages
+.env.example         # Template with all keys
+.env                 # Your actual config
+.gitignore           # Protects secrets
+README.md            # Full documentation
+QUICKSTART.md        # 3-minute setup
+summarize.txt        # This file
+setup.py             # Setup helper
+token_usage.json     # CLI logs
+dashboard_logs.json  # Dashboard logs
+
+DEPENDENCIES
+------------
+Core:
+- langchain, langsmith
+- python-dotenv
+- flask
+
+Providers:
+- transformers (Hugging Face)
+- langchain-google-genai (Gemini)
+- langchain-openai (OpenAI)
+- langchain-anthropic (Anthropic)
+
+SECURITY
+--------
+- No hardcoded API keys
+- .env for all credentials
+- .gitignore protects secrets
+- .env.example as safe template
+- Separate keys per provider
+
+TROUBLESHOOTING
+---------------
+
+1. API Key Error
+   → Check correct key is set in .env for your provider
+
+2. Model Not Found
+   → Update model name in MODEL_CONFIGS dict
+   → Check provider documentation for current model names
+
+3. Import Error
+   → Run: pip install -r requirements.txt
+   → Check all provider packages installed
+
+4. Token Count Mismatch
+   → Current implementation uses approximation
+   → For exact counts, use provider's token API
+
+5. Slow Performance
+   → HuggingFace is slower (CPU-based)
+   → Cloud providers (Gemini, OpenAI, Claude) are faster
+   → First HF model load takes time
+
+COST OPTIMIZATION
+-----------------
+
+Tips to Reduce Costs:
+1. Use GPT-4o-mini instead of GPT-4
+2. Use Gemini free tier for testing
+3. Use HuggingFace for development
+4. Keep prompts concise
+5. Cache frequent responses
+6. Compare providers for your use case
+
+PROVIDER SELECTION GUIDE
+------------------------
+
+Choose HuggingFace if:
+- Development/testing
+- Offline access needed
+- No budget for API calls
+
+Choose Gemini if:
+- Need multimodal (image + text)
+- Want free tier for testing
+- Fast responses important
+
+Choose OpenAI if:
+- Production application
+- Need GPT-4 quality
+- Established API ecosystem
+
+Choose Anthropic if:
+- Very long context (100k+ tokens)
+- Need nuanced, careful responses
+- Latest Claude models preferred
+
+===============================
+END OF DOCUMENTATION
+===============================
+
+This multi-provider token tracker gives you flexibility to choose the best
+LLM for your needs while maintaining consistent tracking and analytics
+across all providers.
+
+For API keys:
+- LangSmith: https://smith.langchain.com
+- Gemini: https://aistudio.google.com/app/apikey
+- OpenAI: https://platform.openai.com/api-keys
+- Anthropic: https://console.anthropic.com/settings/keys

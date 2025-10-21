@@ -1,0 +1,10 @@
+langchain
+langchain_community
+langchain-google-genai
+langchain-openai
+langchain-anthropic
+flask
+transformers>=4.36.0
+torch==2.2.0
+python-dotenv
+
