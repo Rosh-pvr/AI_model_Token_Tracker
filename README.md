@@ -123,6 +123,8 @@ Select provider from dropdown for each query!
 - Known for long context
 - Competitive pricing
 
----
 
-**Happy Multi-Provider Tracking! 🎉**
+**QA TESTING PICS:**
+
+
+<img width="1817" height="990" alt="Screenshot 2025-10-21 101932" src="https://github.com/user-attachments/assets/90380541-3f4a-464f-ba90-6786c928d382" />
