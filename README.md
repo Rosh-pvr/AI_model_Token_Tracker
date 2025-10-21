@@ -127,4 +127,13 @@ Select provider from dropdown for each query!
 **QA TESTING PICS:**
 
 
-<img width="1817" height="990" alt="Screenshot 2025-10-21 101932" src="https://github.com/user-attachments/assets/90380541-3f4a-464f-ba90-6786c928d382" />
+<img width="1920" height="1080" alt="Screenshot (28)" src="https://github.com/user-attachments/assets/10766253-7302-40a6-8f98-66e03e06592b" />
+
+
+
+
+
+
+<img width="1920" height="1080" alt="Screenshot (29)" src="https://github.com/user-attachments/assets/b3011ad2-bdc6-42a8-acc7-496d767b1354" />
+
+
